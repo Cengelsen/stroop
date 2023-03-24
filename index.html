@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stroop</title>
+        <style>
+
+            html{
+                background-color: rgb(22, 22, 22);
+            }
+
+            #overlay {
+              position: fixed;
+              display: none;
+              width: 100%;
+              height: 100%;
+              inset: 0;
+              background-color: rgba(0,0,0);
+              z-index: 2;
+              cursor: pointer;
+            }
+
+            .page-header{
+                margin-bottom: 20px;
+                text-align: center;
+                font-size: 3rem;
+
+            }
+            .clrbutton {
+                padding: 10px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+            }
+            .btn-section{
+                width: 100%;
+                height: 200px;
+                display: grid;
+                justify-content: center;
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(2, auto);
+                gap: 20px;
+            }
+
+            #counter{
+                margin-top: 100px;
+                text-align: center;
+                font-size: 2rem;
+                color: beige;
+            }
+
+
+        </style>
+    </head>
+    <body>
+
+        <div id="overlay">
+            <h1 id="congratulations"></h1>
+            <h1 id="ctf-flag"></h1>
+        </div>
+
+        <div class="stroop-test">
+            <h4 class="page-header" id="stroop-title">farge</h4>
+
+            <div class="btn-section">
+                <button class="clrbutton" id="btn1"></button>
+                <button class="clrbutton" id="btn2"></button>
+                <button class="clrbutton" id="btn3"></button>
+                <button class="clrbutton" id="btn4"></button>
+            </div>
+
+            <div id="counter">0</div>
+        </div>
+
+    </body>
+</html>
+<script src="stroop.js"></script>
