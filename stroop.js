@@ -1,5 +1,53 @@
 const collist = ['green', 'blue', 'yellow', 'red', 'purple', 'orange', 'pink'];
 let counter = 0;
+let timerStart = null;
+let timerInterval = null;
+let timerElapsed = 0;
+
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const milliseconds = Math.floor(ms % 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}.${milliseconds.toString().padStart(3, '0')}`;
+}
+
+function updateTimerDisplay() {
+    const elapsed = timerStart === null
+        ? timerElapsed
+        : timerElapsed + (performance.now() - timerStart);
+    document.getElementById("timer").innerHTML = formatTime(elapsed);
+}
+
+function startTimer() {
+    if (timerInterval !== null) {
+        return;
+    }
+    timerStart = performance.now();
+    timerInterval = setInterval(updateTimerDisplay, 10);
+}
+
+function resetTimer() {
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    timerStart = null;
+    timerElapsed = 0;
+    updateTimerDisplay();
+}
+
+function stopTimer() {
+    if (timerInterval !== null) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+    }
+    if (timerStart !== null) {
+        timerElapsed += performance.now() - timerStart;
+        timerStart = null;
+    }
+    updateTimerDisplay();
+}
 
 /* Random Number Generator, for convenience */
 function createRndNr() {
@@ -74,19 +122,23 @@ function chooseColour(btn) {
 
     /* If you guess correctly */
     if (btn.style.backgroundColor == headertxt) {
-        
+
+        if (counter === 0) {
+            startTimer();
+        }
         counter++;
         initialize();
 
-    /* if you guess wrong */
-    }else {
-        counter = 0;
-        initialize();
-    }
+        if (counter == 30) {
+            stopTimer();
+            victory();
+        }
 
-    /* if you win */
-    if (counter == 30) {
-        victory();
+    /* if you guess wrong */
+    } else {
+        counter = 0;
+        resetTimer();
+        initialize();
     }
 }
 
